@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #708622;
+}
+
+.navlink {
+    position: absolute;
+    right: 20px;
+}
+
+a  {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+    
