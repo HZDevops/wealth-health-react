@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useStore, useSelector } from "react-redux";
-
+import { useStore } from "react-redux";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { state_options, department_options } from "../../data/options";
 import { employeeAdded } from "../../actions/employee";
-//import Modal from "@hzdevops/modal-react-library";
+import { Modal } from "@hzdevops/modal-react-library/dist";
 import "./CreateEmployeeForm.css";
 
 function CreateEmployeeForm() {
   const store = useStore();
-  const { employeeArray } = useSelector((state) => state.employeeCreation);
+  // const { employeeArray } = useSelector((state) => state.employeeCreation);
 
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
@@ -31,6 +30,7 @@ function CreateEmployeeForm() {
 
   /**
    * Close modal
+   * * @param {event} event
    */
   const closeModal = () => {
     setModal(false);
@@ -75,14 +75,15 @@ function CreateEmployeeForm() {
     };
     store.dispatch(employeeAdded(formData));
     setModal(true);
+
+    const form = e.target;
+    form.reset();
   };
 
-  return isOpen ? (
-    <div className="modal" onClick={closeModal}></div>
-  ) : (
+  return (
     <div className="create-employee-form">
       <h2>Create Employee</h2>
-      <form>
+      <form className="form-employee" onSubmit={handleSubmit}>
         <div className="form-element">
           <label htmlFor="">FirstName</label>
           <input
@@ -165,9 +166,14 @@ function CreateEmployeeForm() {
             onChange={(e) => setDepartment(e.value)}
           />
         </div>
-        <button className="save-button" onClick={handleSubmit}>
+        <button className="save-button" type="submit">
           Sign In
         </button>
+        {isOpen ? (
+          <Modal content="Employee Created !" handleResponse={closeModal} />
+        ) : (
+          ""
+        )}
       </form>
     </div>
   );
