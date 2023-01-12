@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "../src/components/Banner/Banner";
-import HomePage from "../src/pages/Homepage/Homepage";
-import EmployeeList from "../src/pages/EmployeeList/EmployeeList";
-import Error404 from "../src/pages/Error404/Error404";
-import "./App.css";
+import "../components/Banner/Banner";
+import HomePage from "../pages/Homepage/Homepage";
+import EmployeeList from "../pages/EmployeeList/EmployeeList";
+import Error404 from "../pages/Error404/Error404";
 
 function App() {
   return (

@@ -6,11 +6,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { state_options, department_options } from "../../data/options";
 import { employeeAdded } from "../../actions/employee";
 import { Modal } from "@hzdevops/modal-react-library/dist";
-import "./CreateEmployeeForm.css";
+import "./EmployeeForm.css";
 
-function CreateEmployeeForm() {
+function EmployeeForm() {
   const store = useStore();
-  // const { employeeArray } = useSelector((state) => state.employeeCreation);
 
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
@@ -91,6 +90,7 @@ function CreateEmployeeForm() {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            required
           />
         </div>
         <div className="form-element">
@@ -100,6 +100,7 @@ function CreateEmployeeForm() {
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            required
           />
         </div>
         <div className="form-element">
@@ -110,6 +111,7 @@ function CreateEmployeeForm() {
             placeholderText=" jj / mm / aaaa"
             dateFormat="dd/MM/yyyy"
             onChange={(date) => parseDateValue(date, "birthDate")}
+            required
           />
         </div>
         <div className="form-element">
@@ -120,6 +122,7 @@ function CreateEmployeeForm() {
             placeholderText=" jj / mm / aaaa"
             dateFormat="dd/MM/yyyy"
             onChange={(date) => parseDateValue(date, "startDate")}
+            required
           />
         </div>
         <h3>Address</h3>
@@ -130,6 +133,7 @@ function CreateEmployeeForm() {
             type="text"
             value={street}
             onChange={(e) => setStreet(e.target.value)}
+            required
           />
         </div>
         <div className="form-element">
@@ -139,6 +143,7 @@ function CreateEmployeeForm() {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            required
           />
         </div>
         <div className="form-element">
@@ -156,6 +161,7 @@ function CreateEmployeeForm() {
             type="text"
             value={zipCode}
             onChange={(e) => setZipCode(e.target.value)}
+            required
           />
         </div>
         <div className="form-element">
@@ -179,4 +185,4 @@ function CreateEmployeeForm() {
   );
 }
 
-export default CreateEmployeeForm;
+export default EmployeeForm;

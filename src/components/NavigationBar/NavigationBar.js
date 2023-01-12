@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./NavigationBar.css";
 
-function Header() {
-  return (
+function NavigationBar({ page }) {
+  return page === "homepage" ? (
     <nav>
       <NavLink to="/">
         <h1>HRnet</h1>
@@ -11,7 +11,13 @@ function Header() {
         View Current Employees
       </NavLink>
     </nav>
+  ) : (
+    <nav>
+      <NavLink to="/">
+        <h1>HRnet</h1>
+      </NavLink>
+    </nav>
   );
 }
 
-export default Header;
+export default NavigationBar;

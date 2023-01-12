@@ -1,13 +1,13 @@
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Banner from "../../components/Banner/Banner";
-import CreateEmployeeForm from "../../components/CreateEmployeeForm/CreateEmployeeForm";
+import EmployeeForm from "../../components/EmployeeForm/EmployeeForm";
 
 function HomePage() {
   return (
     <>
-      <NavigationBar />
+      <NavigationBar page="homepage" />
       <Banner />
-      <CreateEmployeeForm />
+      <EmployeeForm />
     </>
   );
 }
