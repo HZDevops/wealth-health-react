@@ -9,12 +9,12 @@ function EmployeeTable() {
 
   let columns = [
     {
-      name: "firstname",
+      name: "firstName",
       header: "First Name",
       defaultFlex: 2,
     },
     {
-      name: "lastname",
+      name: "lastName",
       header: "Last Name",
     },
     {
@@ -26,7 +26,7 @@ function EmployeeTable() {
       header: "Department",
     },
     {
-      name: "dateOfBirth",
+      name: "birthDate",
       header: "Date of Birth",
     },
     {
@@ -51,7 +51,7 @@ function EmployeeTable() {
 
   return (
     <div className="dataTable">
-      <h1 className="employeeTitle">Current Employees</h1>
+      <h2 className="employeeTitle">Current Employees</h2>
       <ReactDataGrid
         idProperty="id"
         columns={columns}
