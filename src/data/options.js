@@ -1,4 +1,4 @@
-export const state_options = [
+export const states = [
   { value: "alabama", label: "Alabama" },
   { value: "alaska", label: "Alaska" },
   { value: "american samoa", label: "American Samoa" },
@@ -63,7 +63,7 @@ export const state_options = [
   { value: "wyoming", label: "Wyoming" },
 ];
 
-export const department_options = [
+export const departments = [
   { value: "sales", label: "Sales" },
   { value: "marketing", label: "Marketing" },
   { value: "engineering", label: "Engineering" },

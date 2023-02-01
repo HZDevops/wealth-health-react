@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useStore } from "react-redux";
-import Select from "react-select";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { state_options, department_options } from "../../data/options";
+import { states, departments } from "../../data/options";
 import { employeeAdded } from "../../actions/employee";
 import { Modal } from "@hzdevops/modal-react-library/dist";
 import "./EmployeeForm.css";
@@ -15,7 +12,7 @@ function EmployeeForm() {
   const [isOpen, setModal] = useState(false);
 
   //Form state initialisation
-  const [firstName, setFirstName] = useState("");
+  /*const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -25,7 +22,31 @@ function EmployeeForm() {
   const [zipCode, setZipCode] = useState("");
   const [department, setDepartment] = useState("Sales");
   const [birthDateValue, setBirthDateValue] = useState("");
-  const [startDateValue, setStartDateValue] = useState("");
+  const [startDateValue, setStartDateValue] = useState("");*/
+
+  const [formData, setAddFormData] = useState({
+    firstName: "",
+    lastName: "",
+    startDate: "",
+    department: "",
+    birthDate: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  });
+
+  const handleAddFormChange = (e) => {
+    e.preventDefault();
+
+    const fieldName = e.target.getAttribute("name");
+    const fieldValue = e.target.value;
+
+    const newFormData = { ...formData };
+    newFormData[fieldName] = fieldValue;
+
+    setAddFormData(newFormData);
+  };
 
   /**
    * Close modal
@@ -33,23 +54,6 @@ function EmployeeForm() {
    */
   const closeModal = () => {
     setModal(false);
-  };
-
-  /**
-   * Parse the date into a string with a specific format
-   * @param {Object} date - date selected on the Create Employee form
-   * @param {String} option - option related the date field form :birthDate or startDate
-   */
-  const parseDateValue = (date, option) => {
-    const regexDate = new RegExp(/(^..........)/);
-    const dateParsed = date.toISOString().match(regexDate)[0];
-    if (option === "birthDate") {
-      setBirthDateValue(dateParsed);
-      setBirthDate(date);
-    } else if (option === "startDate") {
-      setStartDateValue(dateParsed);
-      setStartDate(date);
-    }
   };
 
   /**
@@ -61,35 +65,35 @@ function EmployeeForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = {
-      firstName: firstName,
-      lastName: lastName,
-      birthDate: birthDateValue,
-      startDate: startDateValue,
-      street: street,
-      city: city,
-      state: state,
-      zipCode: zipCode,
-      department: department,
+    const newEmployee = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      startDate: formData.startDate,
+      department: formData.department,
+      birthDate: formData.birthDate,
+      street: formData.street,
+      city: formData.city,
+      state: formData.state,
+      zipCode: formData.zipCode,
     };
-    store.dispatch(employeeAdded(formData));
+    store.dispatch(employeeAdded(newEmployee));
     setModal(true);
 
-    const form = e.target;
+    const form = document.getElementById("form-employee");
     form.reset();
   };
 
   return (
     <div className="create-employee-form">
       <h2>Create Employee</h2>
-      <form className="form-employee" onSubmit={handleSubmit}>
+      <form id="form-employee">
         <div className="form-element">
           <label htmlFor="">FirstName</label>
           <input
             className="form-input"
             type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            name="firstName"
+            onChange={handleAddFormChange}
             required
           />
         </div>
@@ -98,30 +102,28 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            name="lastName"
+            onChange={handleAddFormChange}
             required
           />
         </div>
         <div className="form-element">
           <label htmlFor="">Date of Birth</label>
-          <DatePicker
-            className="form-input"
-            selected={birthDate}
-            placeholderText=" jj / mm / aaaa"
-            dateFormat="dd/MM/yyyy"
-            onChange={(date) => parseDateValue(date, "birthDate")}
+          <input
+            className="formInput"
+            type="date"
+            name="birthDate"
+            onChange={handleAddFormChange}
             required
           />
         </div>
         <div className="form-element">
           <label htmlFor="">Start Date</label>
-          <DatePicker
-            className="form-input"
-            selected={startDate}
-            placeholderText=" jj / mm / aaaa"
-            dateFormat="dd/MM/yyyy"
-            onChange={(date) => parseDateValue(date, "startDate")}
+          <input
+            className="formInput"
+            type="date"
+            name="startDate"
+            onChange={handleAddFormChange}
             required
           />
         </div>
@@ -131,8 +133,8 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            name="street"
+            onChange={handleAddFormChange}
             required
           />
         </div>
@@ -141,38 +143,58 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            name="city"
+            onChange={handleAddFormChange}
             required
           />
         </div>
         <div className="form-element">
           <label htmlFor="">State</label>
-          <Select
-            defaultValue={state_options[0]}
-            options={state_options}
-            onChange={(e) => setState(e.value)}
-          />
+          <select
+            className="formSelect"
+            name="state"
+            onChange={handleAddFormChange}
+            required
+          >
+            <option value=""></option>
+            {states.map((state, index) => {
+              return (
+                <option key={index} value={state.label}>
+                  {state.label}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className="form-element">
           <label htmlFor="">Zip code</label>
           <input
             className="form-input"
-            type="text"
-            value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
+            type="number"
+            name="zipCode"
+            onChange={handleAddFormChange}
             required
           />
         </div>
         <div className="form-element">
           <label htmlFor="">Department</label>
-          <Select
-            defaultValue={department_options[0]}
-            options={department_options}
-            onChange={(e) => setDepartment(e.value)}
-          />
+          <select
+            className="formSelect"
+            name="department"
+            onChange={handleAddFormChange}
+            required
+          >
+            <option value=""></option>
+            {departments.map((department, index) => {
+              return (
+                <option key={index} value={department.label}>
+                  {department.label}
+                </option>
+              );
+            })}
+          </select>
         </div>
-        <button className="save-button" type="submit">
+        <button className="save-button" onClick={handleSubmit}>
           Sign In
         </button>
         {isOpen ? (
