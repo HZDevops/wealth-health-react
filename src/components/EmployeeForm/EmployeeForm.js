@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useStore } from "react-redux";
+import Select from "react-select";
 import { states, departments } from "../../data/options";
 import { employeeAdded } from "../../actions/employee";
 import { Modal } from "@hzdevops/modal-react-library/dist";
@@ -10,19 +11,6 @@ function EmployeeForm() {
 
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
-
-  //Form state initialisation
-  /*const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("Alabama");
-  const [zipCode, setZipCode] = useState("");
-  const [department, setDepartment] = useState("Sales");
-  const [birthDateValue, setBirthDateValue] = useState("");
-  const [startDateValue, setStartDateValue] = useState("");*/
 
   const [formData, setAddFormData] = useState({
     firstName: "",
@@ -150,49 +138,33 @@ function EmployeeForm() {
         </div>
         <div className="form-element">
           <label htmlFor="">State</label>
-          <select
-            className="formSelect"
-            name="state"
+          <Select
+            defaultValue={states[0]}
+            options={states}
             onChange={handleAddFormChange}
-            required
-          >
-            <option value=""></option>
-            {states.map((state, index) => {
-              return (
-                <option key={index} value={state.label}>
-                  {state.label}
-                </option>
-              );
-            })}
-          </select>
+          />
         </div>
         <div className="form-element">
           <label htmlFor="">Zip code</label>
           <input
             className="form-input"
-            type="number"
+            type="text"
             name="zipCode"
+            minLength="5"
+            maxLength="5"
+            pattern="[0-9.]+"
+            title="Zip code must be 5 digits"
             onChange={handleAddFormChange}
             required
           />
         </div>
         <div className="form-element">
           <label htmlFor="">Department</label>
-          <select
-            className="formSelect"
-            name="department"
+          <Select
+            defaultValue={departments[0]}
+            options={departments}
             onChange={handleAddFormChange}
-            required
-          >
-            <option value=""></option>
-            {departments.map((department, index) => {
-              return (
-                <option key={index} value={department.label}>
-                  {department.label}
-                </option>
-              );
-            })}
-          </select>
+          />
         </div>
         <button className="save-button" onClick={handleSubmit}>
           Sign In
