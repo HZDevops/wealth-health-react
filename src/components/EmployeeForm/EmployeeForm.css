@@ -33,10 +33,18 @@ input {
     font-size: 1.2rem;
 }
 
-input:invalid {
+input:invalid, select:invalid {
     border: 2px solid red;
 }
-           
+
+.form-select {
+    width: 105%;
+    padding: 5px;
+    font-size: 1.2rem;
+    border: 1px solid #b6b3b3;
+    overflow: hidden;
+    background-color: #fff;
+}
 .save-button {
     display: block;
     width: 20%;
