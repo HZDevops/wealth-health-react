@@ -8,67 +8,100 @@ import "./EmployeeForm.css";
 function EmployeeForm() {
   const store = useStore();
 
+  //Form state initialisation
+  const [state, setState] = useState({
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    startDate: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    department: "",
+  });
+
+  //Input validation state initialisation
+  const [error, setError] = useState(true);
+
+  //Form validation state initialisation
+  const [isValid, setValidation] = useState(false);
+
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
 
-  //Form state initialisation
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("Alabama");
-  const [zipCode, setZipCode] = useState("");
-  const [department, setDepartment] = useState("Sales");
+  /**
+   * Handle and validate user inputs
+   * @param {object} e - 'onClick' event type
+   */
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    setState({
+      ...state,
+
+      [e.target.name]: value,
+    });
+    validateInput(e);
+    if (
+      !error &&
+      state.firstName &&
+      state.lastName &&
+      state.birthDate &&
+      state.startDate &&
+      state.street &&
+      state.city &&
+      state.state &&
+      state.zipCode &&
+      state.department
+    ) {
+      setValidation(true);
+    }
+  };
+
+  /**
+   * Check if user inputs match with pattern
+   * @param {object} e - 'onClick' event type
+   */
+  const validateInput = (e) => {
+    if (e.target.validity.patternMismatch) {
+      setError(false);
+    }
+  };
 
   /**
    * Close modal
-   * * @param {event} event
    */
   const closeModal = () => {
     setModal(false);
   };
-  /** 
-   * Parse the date into a string with a specific format
-   * @param {Object} date - date selected on the Create Employee form
-   * @param {String} option - option related the date field form :birthDate or startDate
-   *
-  const parseDateValue = (date, option) => {
-    const regexDate = new RegExp(/(^..........)/);
-    const dateParsed = date.toISOString().match(regexDate)[0];
-    if (option === "birthDate") {
-      setBirthDateValue(dateParsed);
-      setBirthDate(date);
-    } else if (option === "startDate") {
-      setStartDateValue(dateParsed);
-      setStartDate(date);
-    }
-  };*/
+
   /**
-   * Get the data from the form stored in the state locale,
-   * check if the form is valid -> formValidation(),
-   * if the form is valid add a new employee to the global state of the application -> add_employee()
-   * @param {object} e - 'onSubmit' event type
+   * Get the data from local state,
+   * check if the form is valid
+   * before adding the new employee to the global state of the application
+   * @param {object} e - 'onClick' event type
    */
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      firstName: firstName,
-      lastName: lastName,
-      birthDate: birthDate,
-      startDate: startDate,
-      street: street,
-      city: city,
-      state: state,
-      zipCode: zipCode,
-      department: department,
+      firstName: state.firstName,
+      lastName: state.lastName,
+      birthDate: state.birthDate,
+      startDate: state.startDate,
+      street: state.street,
+      city: state.city,
+      state: state.state,
+      zipCode: state.zipCode,
+      department: state.department,
     };
-    store.dispatch(employeeAdded(formData));
-    setModal(true);
+    if (isValid) {
+      store.dispatch(employeeAdded(formData));
+      setModal(true);
 
-    const form = document.getElementById("form-employee");
-    form.reset();
+      const form = document.getElementById("form-employee");
+      form.reset();
+    }
   };
 
   return (
@@ -76,22 +109,30 @@ function EmployeeForm() {
       <h2>Create Employee</h2>
       <form id="form-employee">
         <div className="form-element">
-          <label htmlFor="">FirstName</label>
+          <label htmlFor="">First Name</label>
           <input
             className="form-input"
             type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            minLength="2"
+            pattern="^[a-zA-ZÀ-ú\-\s]*"
+            placeholder="Ex: Julien"
+            name="firstName"
+            value={state.firstName}
+            onChange={handleChange}
             required
           />
         </div>
         <div className="form-element">
-          <label htmlFor="">LastName</label>
+          <label htmlFor="">Last Name</label>
           <input
             className="form-input"
             type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            minLength="2"
+            pattern="^[a-zA-ZÀ-ú\-\s]*"
+            placeholder="Ex: Martin"
+            name="lastName"
+            value={state.lastName}
+            onChange={handleChange}
             required
           />
         </div>
@@ -101,7 +142,8 @@ function EmployeeForm() {
             className="formInput"
             type="date"
             name="birthDate"
-            onChange={(e) => setBirthDate(e.target.value)}
+            value={state.birthDate}
+            onChange={handleChange}
             required
           />
         </div>
@@ -111,7 +153,8 @@ function EmployeeForm() {
             className="formInput"
             type="date"
             name="startDate"
-            onChange={(e) => setStartDate(e.target.value)}
+            value={state.startDate}
+            onChange={handleChange}
             required
           />
         </div>
@@ -121,8 +164,11 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            placeholder="Ex: 455 Larkspur Dr."
+            pattern="^[a-zA-Z0-9À-ú\-\s]{5,30}"
+            name="street"
+            value={state.street}
+            onChange={handleChange}
             required
           />
         </div>
@@ -131,8 +177,11 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            pattern="^[a-zA-ZÀ-ú\-\s]*"
+            placeholder="Ex: California Springs"
+            name="city"
+            value={state.city}
+            onChange={handleChange}
             required
           />
         </div>
@@ -141,7 +190,8 @@ function EmployeeForm() {
           <select
             className="form-select"
             name="state"
-            onChange={(e) => setState(e.target.value)}
+            value={state.state}
+            onChange={handleChange}
             required
           >
             <option value=""></option>
@@ -159,12 +209,12 @@ function EmployeeForm() {
           <input
             className="form-input"
             type="text"
-            value={zipCode}
-            minLength="5"
-            maxLength="5"
-            pattern="[0-9.]+"
+            placeholder="Ex: 93207"
+            value={state.zipCode}
+            name="zipCode"
+            pattern="[0-9]{5}"
             title="Zip code must be 5 digits"
-            onChange={(e) => setZipCode(e.target.value)}
+            onChange={handleChange}
             required
           />
         </div>
@@ -173,7 +223,7 @@ function EmployeeForm() {
           <select
             className="form-select"
             name="department"
-            onChange={(e) => setDepartment(e.target.value)}
+            onChange={handleChange}
             required
           >
             <option value=""></option>
@@ -186,8 +236,12 @@ function EmployeeForm() {
             })}
           </select>
         </div>
-        <button className="save-button" onClick={handleSubmit}>
-          Sign In
+        <button
+          className="save-button"
+          disabled={!isValid}
+          onClick={handleSubmit}
+        >
+          Save
         </button>
         {isOpen ? (
           <Modal content="Employee Created !" handleResponse={closeModal} />

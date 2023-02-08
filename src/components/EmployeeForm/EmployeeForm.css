@@ -37,6 +37,10 @@ input:invalid, select:invalid {
     border: 2px solid red;
 }
 
+::placeholder {
+    font-size: 0.8em;
+}
+  
 .form-select {
     width: 105%;
     padding: 5px;
@@ -45,6 +49,7 @@ input:invalid, select:invalid {
     overflow: hidden;
     background-color: #fff;
 }
+
 .save-button {
     display: block;
     width: 20%;
@@ -57,5 +62,9 @@ input:invalid, select:invalid {
     background-color: #708622;
     color: #fff;
     cursor: pointer;
+}
+
+.save-button:disabled {
+    background-color: gray;
 }
       
