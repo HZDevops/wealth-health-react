@@ -121,6 +121,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">First Name</label>
           <input
+            aria-label="The first name"
             className="form-input"
             type="text"
             minLength="2"
@@ -135,6 +136,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Last Name</label>
           <input
+            aria-label="The last name"
             className="form-input"
             type="text"
             minLength="2"
@@ -149,6 +151,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Date of Birth</label>
           <input
+            aria-label="The date of birth"
             className="formInput"
             type="date"
             name="birthDate"
@@ -160,6 +163,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Start Date</label>
           <input
+            aria-label="The job starting date"
             className="formInput"
             type="date"
             name="startDate"
@@ -172,6 +176,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Street</label>
           <input
+            aria-label="The address"
             className="form-input"
             type="text"
             placeholder="Ex: 455 Larkspur Dr."
@@ -184,6 +189,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">City</label>
           <input
+            aria-label="The city"
             className="form-input"
             type="text"
             pattern="^[a-zA-ZÀ-ú\-\s]*"
@@ -197,6 +203,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">State</label>
           <select
+            aria-label="The state"
             className="form-select"
             name="state"
             value={state.state}
@@ -216,6 +223,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Zip code</label>
           <input
+            aria-label="The zip code"
             className="form-input"
             type="text"
             placeholder="Ex: 93207"
@@ -230,6 +238,7 @@ function EmployeeForm() {
         <div className="form-element">
           <label htmlFor="">Department</label>
           <select
+            aria-label="The department"
             className="form-select"
             name="department"
             onChange={handleChange}
@@ -246,6 +255,7 @@ function EmployeeForm() {
           </select>
         </div>
         <button
+          aria-label="Save employee"
           className="save-button"
           disabled={!isValid}
           onClick={handleSubmit}
