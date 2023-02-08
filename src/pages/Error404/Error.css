@@ -1,0 +1,23 @@
+.error {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.error-title {
+    width: 597px;
+    height: 263px;
+    color:#708622;
+    font-size: 288px;
+    margin: auto;
+}
+
+.error-description {
+    width: auto;
+    height: 51px;
+    color: #708622;
+    display: block;
+    font-size: 36px;
+    margin: auto;
+    margin-left:75px;
+    padding-top: 66px;
+}

@@ -98,9 +98,19 @@ function EmployeeForm() {
     if (isValid) {
       store.dispatch(employeeAdded(formData));
       setModal(true);
+      setState({
+        firstName: "",
+        lastName: "",
+        birthDate: "",
+        startDate: "",
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        department: "",
+      });
 
-      const form = document.getElementById("form-employee");
-      form.reset();
+      setValidation(false);
     }
   };
 
@@ -165,7 +175,6 @@ function EmployeeForm() {
             className="form-input"
             type="text"
             placeholder="Ex: 455 Larkspur Dr."
-            pattern="^[a-zA-Z0-9À-ú\-\s]{5,30}"
             name="street"
             value={state.street}
             onChange={handleChange}
