@@ -21,17 +21,11 @@ function EmployeeForm() {
     department: "",
   });
 
-  //Input validation state initialisation
-  const [error, setError] = useState(true);
-
-  //Form validation state initialisation
-  const [isValid, setValidation] = useState(false);
-
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
 
   /**
-   * Handle and validate user inputs
+   * Handle user input and store in local state
    * @param {object} e - 'onClick' event type
    */
   const handleChange = (e) => {
@@ -42,31 +36,6 @@ function EmployeeForm() {
 
       [e.target.name]: value,
     });
-    validateInput(e);
-    if (
-      !error &&
-      state.firstName &&
-      state.lastName &&
-      state.birthDate &&
-      state.startDate &&
-      state.street &&
-      state.city &&
-      state.state &&
-      state.zipCode &&
-      state.department
-    ) {
-      setValidation(true);
-    }
-  };
-
-  /**
-   * Check if user inputs match with pattern
-   * @param {object} e - 'onClick' event type
-   */
-  const validateInput = (e) => {
-    if (e.target.validity.patternMismatch) {
-      setError(false);
-    }
   };
 
   /**
@@ -77,9 +46,7 @@ function EmployeeForm() {
   };
 
   /**
-   * Get the data from local state,
-   * check if the form is valid
-   * before adding the new employee to the global state of the application
+   * Get the data from local state and add to the global state of the application
    * @param {object} e - 'onClick' event type
    */
   const handleSubmit = (e) => {
@@ -95,23 +62,20 @@ function EmployeeForm() {
       zipCode: state.zipCode,
       department: state.department,
     };
-    if (isValid) {
-      store.dispatch(employeeAdded(formData));
-      setModal(true);
-      setState({
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        startDate: "",
-        street: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        department: "",
-      });
 
-      setValidation(false);
-    }
+    store.dispatch(employeeAdded(formData));
+    setModal(true);
+    setState({
+      firstName: "",
+      lastName: "",
+      birthDate: "",
+      startDate: "",
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      department: "",
+    });
   };
 
   return (
@@ -229,7 +193,7 @@ function EmployeeForm() {
             placeholder="Ex: 93207"
             value={state.zipCode}
             name="zipCode"
-            pattern="[0-9]{5}"
+            pattern="^[0-9]{5}(?:-[0-9]{4})?$"
             title="Zip code must be 5 digits"
             onChange={handleChange}
             required
@@ -241,6 +205,7 @@ function EmployeeForm() {
             aria-label="The department"
             className="form-select"
             name="department"
+            value={state.department}
             onChange={handleChange}
             required
           >
@@ -257,7 +222,6 @@ function EmployeeForm() {
         <button
           aria-label="Save employee"
           className="save-button"
-          disabled={!isValid}
           onClick={handleSubmit}
         >
           Save

@@ -55,7 +55,7 @@ function EmployeeTable() {
     },
   ];
 
-  const gridStyle = { minHeight: 550 };
+  const gridStyle = { minHeight: 250 };
 
   return (
     <>
