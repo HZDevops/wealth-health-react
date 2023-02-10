@@ -263,7 +263,11 @@ function EmployeeForm() {
           Save
         </button>
         {isOpen ? (
-          <Modal content="Employee Created !" handleResponse={closeModal} />
+          <Modal
+            content={"Employee Created !"}
+            buttonStyle={{ backgroundColor: "#708622", color: "white" }}
+            handleResponse={closeModal}
+          />
         ) : (
           ""
         )}
