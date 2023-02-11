@@ -4,7 +4,7 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 function EmployeeList() {
   return (
     <>
-      <NavigationBar page="employeelist" />
+      <NavigationBar />
       <EmployeeTable />
     </>
   );

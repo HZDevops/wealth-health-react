@@ -16,13 +16,16 @@ function EmployeeForm() {
     startDate: "",
     street: "",
     city: "",
-    state: "",
+    state: states[0].label,
     zipCode: "",
-    department: "",
+    department: departments[0].label,
   });
 
   //Modal state initialisation
   const [isOpen, setModal] = useState(false);
+
+  //Validation form state initialisation
+  const [isValid, setValidation] = useState(false);
 
   /**
    * Handle user input and store in local state
@@ -36,6 +39,29 @@ function EmployeeForm() {
 
       [e.target.name]: value,
     });
+    validateForm();
+  };
+
+  /**
+   * Handle form validation
+   */
+  const validateForm = () => {
+    const input = document.getElementsByClassName("form-input");
+    const select = document.getElementsByClassName("form-select");
+
+    if (
+      input[0].validationMessage === "" &&
+      input[1].validationMessage === "" &&
+      input[2].validationMessage === "" &&
+      input[3].validationMessage === "" &&
+      input[4].validationMessage === "" &&
+      select[0].value &&
+      select[1].value
+    ) {
+      setValidation(true);
+    } else {
+      setValidation(false);
+    }
   };
 
   /**
@@ -51,6 +77,7 @@ function EmployeeForm() {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = {
       firstName: state.firstName,
       lastName: state.lastName,
@@ -72,10 +99,11 @@ function EmployeeForm() {
       startDate: "",
       street: "",
       city: "",
-      state: "",
+      state: states[0].label,
       zipCode: "",
-      department: "",
+      department: departments[0].label,
     });
+    setValidation(false);
   };
 
   return (
@@ -222,6 +250,7 @@ function EmployeeForm() {
         <button
           aria-label="Save employee"
           className="save-button"
+          disabled={!isValid}
           onClick={handleSubmit}
         >
           Save
