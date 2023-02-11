@@ -37,10 +37,6 @@ input:invalid, select:invalid {
     border: 2px solid red;
 }
 
-input:valid, select:valid {
-    border: 2px solid #708622;
-}
-
 ::placeholder {
     font-size: 0.8em;
 }

@@ -55,7 +55,7 @@ function EmployeeTable() {
     },
   ];
 
-  const gridStyle = { minHeight: 250 };
+  const gridStyle = { minHeight: 300 };
 
   return (
     <>
@@ -64,6 +64,7 @@ function EmployeeTable() {
         <ReactDataGrid
           idProperty="id"
           columns={columns}
+          pagination="local"
           dataSource={employeeArray}
           style={gridStyle}
         />
