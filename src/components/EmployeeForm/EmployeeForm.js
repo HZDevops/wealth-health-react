@@ -171,6 +171,8 @@ function EmployeeForm() {
             aria-label="The address"
             className="form-input"
             type="text"
+            minLength="5"
+            pattern="^[a-zA-ZÀ-ú0-9\-\.\s]*"
             placeholder="Ex: 455 Larkspur Dr."
             name="street"
             value={state.street}
